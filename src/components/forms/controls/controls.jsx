@@ -172,12 +172,19 @@ export const Controls = () => {
           <Button
             variant="outline"
             className="b-primary"
+            disabled={end ? false : true}
             _hover={{ bg: '#1d5d90', color: '#FFFFFF' }}
             _active={{ bg: '#1d5d90', color: '#FFFFFF' }}
             isFullWidth
           >
             Consultar
           </Button>
+
+          {end ? null : (
+            <Text fontSize="sm" align="left" width="100%">
+              * Debe tener todos los campos debidamente diligenciados.
+            </Text>
+          )}
         </>
       ) : null}
     </VStack>
