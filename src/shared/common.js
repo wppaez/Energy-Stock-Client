@@ -34,8 +34,9 @@ export class DateHelper {
     return d;
   }
 
-  static formatDate(date, format = 'yyyy-MM-dd') {
+  static formatDate(date, format = 'yyyy-MM-dd', getNext = false) {
     try {
+      if (getNext) date = new Date(date.getTime() + 24 * 60 * 60 * 1000);
       const years = date.getFullYear().toString();
       const months = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');

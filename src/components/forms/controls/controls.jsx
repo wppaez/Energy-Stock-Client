@@ -45,7 +45,7 @@ export const Controls = ({ onSubmit }) => {
     const params = {
       model: model,
       start: DateHelper.formatDate(start),
-      end: DateHelper.formatDate(end),
+      end: DateHelper.formatDate(end, 'yyyy-MM-dd', true),
     };
     /**
      * BUILD URL WITH QUERY PARAMS
@@ -135,6 +135,7 @@ export const Controls = ({ onSubmit }) => {
           <HStack width="100%" justify="space-between">
             <DatePicker
               dateFormat="yyyy-MM-dd"
+              todayButton="Hoy"
               selected={start}
               startDate={start}
               endDate={end}
@@ -142,6 +143,7 @@ export const Controls = ({ onSubmit }) => {
               locale={DateHelper.locale()}
               onChange={hanldeDatePickerChange}
               className="date-picker"
+              disabledKeyboardNavigation
               selectsRange
               inline
             />
