@@ -39,7 +39,7 @@ const formatDate = (date, format = 'yyyy-MM-dd') => {
   }
 };
 
-export const Controls = () => {
+export const Controls = ({ onSubmit }) => {
   const [variable, setVariable] = useState(() => VARIABLES[0]);
   const [model, setModel] = useState(() => MODELS[0].name);
   const [start, setStart] = useState(() => getCurrentTime());
@@ -63,6 +63,10 @@ export const Controls = () => {
     let [startUpdate, endUpdate] = dates;
     setStart(startUpdate);
     setEnd(endUpdate);
+  }
+
+  function handleSubmit() {
+    onSubmit(model, [start, end]);
   }
 
   function renderVariables() {
@@ -126,6 +130,7 @@ export const Controls = () => {
             </MenuButton>
             <MenuList zIndex={2}>{renderModels()}</MenuList>
           </Menu>
+
           {/* Ranged date */}
           <HStack width="100%" justify="space-between">
             <DatePicker
@@ -161,18 +166,12 @@ export const Controls = () => {
             </VStack>
           </HStack>
 
-          {/* End date */}
-          {/* <HStack pl="4">
-            <Icon as={BiCalendarEvent} w={6} h={6} />
-            <Text fontSize="2xl" pr="4">
-              Fecha fin
-            </Text>
-            <DatePicker selectedDate={end} onChange={d => console.log(d)} />
-          </HStack> */}
+          {/* Submit */}
           <Button
             variant="outline"
             className="b-primary"
             disabled={end ? false : true}
+            onClick={() => handleSubmit()}
             _hover={{ bg: '#1d5d90', color: '#FFFFFF' }}
             _active={{ bg: '#1d5d90', color: '#FFFFFF' }}
             isFullWidth
@@ -180,6 +179,7 @@ export const Controls = () => {
             Consultar
           </Button>
 
+          {/* Info */}
           {end ? null : (
             <Text fontSize="sm" align="left" width="100%">
               * Debe tener todos los campos debidamente diligenciados.
