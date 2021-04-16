@@ -12,39 +12,15 @@ import { BiStats, BiFilterAlt, BiCalendarEvent } from 'react-icons/bi';
 import { FaChevronDown } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { MODELS, VARIABLES } from '../../../shared/common';
+import { MODELS, VARIABLES, DateHelper } from '../../../shared/common';
 import './controls.css';
-
-const getCurrentTime = (offset = false) => {
-  const d = new Date();
-  d.setHours(0);
-  d.setMinutes(0);
-  d.setSeconds(0);
-  d.setMilliseconds(0);
-  if (offset) return new Date(d.getTime() + 24 * 60 * 60 * 1000);
-  return d;
-};
-
-const formatDate = (date, format = 'yyyy-MM-dd') => {
-  try {
-    const years = date.getFullYear().toString();
-    const months = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return format
-      .replace('yyyy', years)
-      .replace('MM', months)
-      .replace('dd', day);
-  } catch (error) {
-    return 'Sin seleccionar';
-  }
-};
 
 export const Controls = ({ onSubmit }) => {
   const [variable, setVariable] = useState(() => VARIABLES[0]);
   const [model, setModel] = useState(() => MODELS[0].name);
-  const [start, setStart] = useState(() => getCurrentTime());
-  const [end, setEnd] = useState(() => getCurrentTime(true));
-  const minDate = getCurrentTime();
+  const [start, setStart] = useState(() => DateHelper.getCurrentTime());
+  const [end, setEnd] = useState(() => DateHelper.getCurrentTime(true));
+  const minDate = DateHelper.getCurrentTime();
 
   const variableIsSelected = variable !== VARIABLES[0];
 
@@ -65,8 +41,32 @@ export const Controls = ({ onSubmit }) => {
     setEnd(endUpdate);
   }
 
-  function handleSubmit() {
-    onSubmit(model, [start, end]);
+  async function handleSubmit() {
+    const params = {
+      model: model,
+      start: DateHelper.formatDate(start),
+      end: DateHelper.formatDate(end),
+    };
+    /**
+     * BUILD URL WITH QUERY PARAMS
+     */
+    const url = new URL('http://localhost:5000/predict');
+    Object.keys(params).map(key => url.searchParams.append(key, params[key]));
+    /**
+     * FETCH DATA
+     */
+    try {
+      // would be nice to set loading 'true' here for layout.
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await response.json();
+      // would be nice to set loading 'false' here for layout.
+      onSubmit(data);
+    } catch (error) {
+      console.log('Something went wrong...');
+    }
   }
 
   function renderVariables() {
@@ -139,8 +139,9 @@ export const Controls = ({ onSubmit }) => {
               startDate={start}
               endDate={end}
               minDate={minDate}
-              className="date-picker"
+              locale={DateHelper.locale()}
               onChange={hanldeDatePickerChange}
+              className="date-picker"
               selectsRange
               inline
             />
@@ -151,7 +152,7 @@ export const Controls = ({ onSubmit }) => {
               </HStack>
               <HStack width="100%">
                 <Text fontSize="lg" align="right" width="100%">
-                  {formatDate(start)}
+                  {DateHelper.formatDate(start)}
                 </Text>
               </HStack>
               <HStack pl="4">
@@ -160,7 +161,7 @@ export const Controls = ({ onSubmit }) => {
               </HStack>
               <HStack width="100%">
                 <Text fontSize="lg" align="right" width="100%">
-                  {formatDate(end)}
+                  {DateHelper.formatDate(end)}
                 </Text>
               </HStack>
             </VStack>

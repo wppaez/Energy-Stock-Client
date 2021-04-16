@@ -5,7 +5,7 @@ import { Controls } from '../forms/controls/controls';
 export const Layout = () => {
   return (
     <HStack h="100vh" fontSize="xl" bg="#f0f0f0" spacing={0}>
-      <Controls onSubmit={(model, dates) => console.log(model, dates)} />
+      <Controls onSubmit={data => console.log(data)} />
       <VStack bg="#CCCCCC" m={0} minH="100vh" flex="1"></VStack>
     </HStack>
   );
