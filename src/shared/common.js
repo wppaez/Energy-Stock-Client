@@ -1,3 +1,5 @@
+import chroma from 'chroma-js';
+
 /**
  * bolsa 4:
  *  Arima
@@ -49,6 +51,13 @@ export class DateHelper {
     }
   }
 
+  static d3Format(date) {
+    const years = date.getFullYear().toString();
+    const months = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${years}-${months}-${day}`;
+  }
+
   static locale() {
     const months = [
       'Enero',
@@ -73,5 +82,11 @@ export class DateHelper {
       },
       formatLong: {},
     };
+  }
+}
+
+export class ChromaHelper {
+  static brighten(color, delta) {
+    return chroma(color).brighten(delta);
   }
 }

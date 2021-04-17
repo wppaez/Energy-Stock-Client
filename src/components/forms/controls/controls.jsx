@@ -20,9 +20,16 @@ export const Controls = ({ onSubmit }) => {
   const [model, setModel] = useState(() => MODELS[0].name);
   const [start, setStart] = useState(() => DateHelper.getCurrentTime());
   const [end, setEnd] = useState(() => DateHelper.getCurrentTime(true));
+  const [loading, setLoading] = useState(() => false);
   const minDate = DateHelper.getCurrentTime();
 
   const variableIsSelected = variable !== VARIABLES[0];
+
+  function isButtonDisabled() {
+    if (loading) return true;
+    if (!end) return true;
+    return false;
+  }
 
   function modelVariableFilter(filterVariable) {
     return MODELS.filter(m => m.variable === filterVariable);
@@ -56,6 +63,7 @@ export const Controls = ({ onSubmit }) => {
      * FETCH DATA
      */
     try {
+      setLoading(true);
       // would be nice to set loading 'true' here for layout.
       const response = await fetch(url, {
         method: 'POST',
@@ -63,6 +71,7 @@ export const Controls = ({ onSubmit }) => {
       });
       const data = await response.json();
       // would be nice to set loading 'false' here for layout.
+      setLoading(false);
       onSubmit(data);
     } catch (error) {
       console.log('Something went wrong...');
@@ -173,7 +182,8 @@ export const Controls = ({ onSubmit }) => {
           <Button
             variant="outline"
             className="b-primary"
-            disabled={end ? false : true}
+            isLoading={loading}
+            disabled={isButtonDisabled()}
             onClick={() => handleSubmit()}
             _hover={{ bg: '#1d5d90', color: '#FFFFFF' }}
             _active={{ bg: '#1d5d90', color: '#FFFFFF' }}
