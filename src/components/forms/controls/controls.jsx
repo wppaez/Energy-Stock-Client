@@ -50,6 +50,7 @@ export const Controls = ({ onSubmit }) => {
 
   async function handleSubmit() {
     const params = {
+      variable: variable,
       model: model,
       start: DateHelper.formatDate(start),
       end: DateHelper.formatDate(end, 'yyyy-MM-dd', true),
@@ -57,7 +58,8 @@ export const Controls = ({ onSubmit }) => {
     /**
      * BUILD URL WITH QUERY PARAMS
      */
-    const url = new URL('http://localhost:5000/predict');
+    //const url = new URL('http://157.230.54.231:5000/predict');
+    const url = new URL('https://e-stock-api.com/predict');
     Object.keys(params).map(key => url.searchParams.append(key, params[key]));
     /**
      * FETCH DATA

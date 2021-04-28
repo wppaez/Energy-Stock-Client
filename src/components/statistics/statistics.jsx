@@ -180,9 +180,9 @@ export const Statistics = ({ stats }) => {
       .attr('class', 'linechart-y-axis-label')
       .attr('text-anchor', 'end')
       .attr('transform', 'rotate(-90)')
-      .attr('y', -margin.left + 20)
+      .attr('y', -margin.left + 10)
       .attr('x', 0)
-      .text('Precio Bolsa KW/día ($)');
+      .text(`${stats.variable} KW/día ($)`);
   }, [stats, dimensions]);
 
   return (

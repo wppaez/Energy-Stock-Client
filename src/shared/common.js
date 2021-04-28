@@ -11,18 +11,20 @@ import chroma from 'chroma-js';
 
 export const VARIABLES = [
   'Seleccione su variable',
-  'Precio Bolsa de Energía',
-  'Precio Energia Costa Atl.',
+  'Bolsa de Energia',
+  'Precio Unitario',
 ];
 
 export const MODELS = [
-  { name: 'Seleccione su modelo', variable: 'Seleccione su variable' },
-  { name: 'ARIMA', variable: 'Precio Bolsa de Energía' },
-  { name: 'Exponencial Doble', variable: 'Precio Bolsa de Energía' },
-  { name: 'GARCH', variable: 'Precio Bolsa de Energía' },
-  { name: 'TAR', variable: 'Precio Bolsa de Energía' },
-  { name: 'Gradient Boosting', variable: 'Precio Energia Costa Atl.' },
-  { name: 'Red Neuronal', variable: 'Precio Energia Costa Atl.' },
+  { name: 'Seleccione su modelo', variable: VARIABLES[0] },
+  { name: 'ARIMA', variable: VARIABLES[1] },
+  { name: 'Exponencial Doble', variable: VARIABLES[1] },
+  { name: 'GARCH', variable: VARIABLES[1] },
+  { name: 'SETAR', variable: VARIABLES[1] },
+  { name: 'ARIMA', variable: VARIABLES[2] },
+  { name: 'Proceso Gaussiano', variable: VARIABLES[2] },
+  { name: 'SVM', variable: VARIABLES[2] },
+  { name: 'Red Neuronal', variable: VARIABLES[2] },
 ];
 
 export class DateHelper {
