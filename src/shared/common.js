@@ -75,7 +75,7 @@ export class DateHelper {
       'Noviembre',
       'Diciembre',
     ];
-    const days = ['Lu.', 'Mar.', 'Mie.', 'Jue.', 'Vie.', 'Sa.', 'Dom.'];
+    const days = ['Dom.', 'Lun.', 'Mar.', 'Mie.', 'Jue.', 'Vie.', 'Sab.'];
 
     return {
       localize: {

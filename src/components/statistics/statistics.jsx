@@ -69,16 +69,7 @@ export const Statistics = ({ stats }) => {
       .attr('class', `clickable linechart-dot-${1}`)
       .attr('stroke', dotColor)
       .attr('r', 2)
-      //   .attr('r', (record, index) =>
-      //     record.date >= selection[0] && record.date <= selection[1] ? 4 : 2
-      //   )
-      .attr(
-        'fill',
-        dotColor
-        // record.date >= selection[0] && record.date <= selection[1]
-        //   ? Common.brightenColor(entry.color, 2)
-        //   : entry.color
-      )
+      .attr('fill', dotColor)
       .attr('cx', (record, index) => xScale(new Date(record.date)))
       .attr('cy', (record, index) => yScale(record.value))
       .on('mouseover', (event, { date, value }) => {
